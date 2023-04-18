@@ -4,32 +4,38 @@ import java.util.ArrayList;
 
 public class SistemaSolar {
 
-		private ArrayList<Planeta> sistemaSolar;
+	private ArrayList<Planeta> planetas;
+
 	public SistemaSolar() {
-		
-		ArrayList<Planeta> sistemaSolar = new ArrayList<Planeta>();
+
+		planetas = new ArrayList<Planeta>();
 	}
 
-	public void AddPlanetas(Planeta p1) {
-		boolean repetido = false;
-		
-		for(int i=0; i < sistemaSolar.size(); i++) {
-			
-			
-			if(sistemaSolar.get(i) == p1) {
-				repetido = true;
+	public void AddPlanetas(Planeta p1) throws Exception {
+
+		if (planetas.size() <= 3) {
+			if (!planetas.contains(p1)) {
+				planetas.add(p1);
+
+			} else {
+				PlanetaRepetidoException error = new PlanetaRepetidoException("Planeta Repetido");
+				throw error;
 			}
-		
+		} else {
+			String texto = "Sistema Solar completo " + planetas.size(); 
+			SistemaSolarLlenoException error = new SistemaSolarLlenoException(texto);
+			throw error;
 		}
-		if (repetido == false) {
-			 sistemaSolar.add(p1);
-		}
+
+	}
+
+	public void ordenar() {
+		planetas.sort(new Comparador());
 	}
 
 	@Override
 	public String toString() {
-		return "SistemaSolar [" + sistemaSolar + "]";
+		return planetas.toString();
 	}
-	
-	
+
 }
